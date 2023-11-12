@@ -1,0 +1,5 @@
+{
+  "devDependencies": {
+    "selenium-standalone": "^9.3.0"
+  }
+}
