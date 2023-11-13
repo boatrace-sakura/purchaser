@@ -4,7 +4,7 @@
 [![Latest Unstable Version](https://poser.pugx.org/boatrace-sakura/purchaser/v/unstable)](https://packagist.org/packages/boatrace-sakura/purchaser)
 [![License](https://poser.pugx.org/boatrace-sakura/purchaser/license)](https://packagist.org/packages/boatrace-sakura/purchaser)
 
-Boatrace Sakura Purchaserはブラウザを操作して舟券を自動購入するためのライブラリです。
+Boatrace Sakura Purchaserはブラウザを操作して舟券を購入するためのPHPライブラリです。
 
 ## Installation
 ```bash
