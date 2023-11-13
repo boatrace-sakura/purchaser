@@ -10,6 +10,7 @@ use Facebook\WebDriver\Remote\DesiredCapabilities;
 use Facebook\WebDriver\Remote\RemoteWebDriver;
 use Facebook\WebDriver\WebDriverBy;
 use Facebook\WebDriver\WebDriverExpectedCondition;
+use RuntimeException;
 
 /**
  * @author shimomo
@@ -192,7 +193,7 @@ class MainPurchaser
         $this->driver->findElement(WebDriverBy::id('closeChargecomp'))->click();
         usleep(500000);
 
-        do {
+        for ($depositCounter = 1; $depositCounter <= 10; ++$depositCounter) {
             $this->driver->wait(10, 500)->until(WebDriverExpectedCondition::visibilityOfElementLocated(WebDriverBy::id('gnavi02')));
             $this->driver->wait(10, 500)->until(WebDriverExpectedCondition::elementToBeClickable(WebDriverBy::id('gnavi02')));
             $this->driver->findElement(WebDriverBy::id('gnavi02'))->click();
@@ -211,7 +212,15 @@ class MainPurchaser
             $this->driver->wait(10, 500)->until(WebDriverExpectedCondition::elementToBeClickable(WebDriverBy::id('closeBalref')));
             $this->driver->findElement(WebDriverBy::id('closeBalref'))->click();
             usleep(500000);
-        } while ($depositAmount < $this->depositAmount);
+
+            if ($depositAmount >= $this->depositAmount) {
+                break;
+            }
+
+            if ($depositCounter === 10) {
+                throw new RuntimeException('入金に失敗しました。');
+            }
+        }
 
         $this->driver->wait(10, 500)->until(WebDriverExpectedCondition::visibilityOfElementLocated(WebDriverBy::id('jyo' . sprintf('%02d', $stadiumId))));
         $this->driver->wait(10, 500)->until(WebDriverExpectedCondition::elementToBeClickable(WebDriverBy::id('jyo' . sprintf('%02d', $stadiumId))));
